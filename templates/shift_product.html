@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Edit Product</title>
+</head>
+
+<body style="background-image: url('https://png.pngtree.com/background/20210709/original/pngtree-hand-painted-simple-blue-sky-sky-picture-image_954141.jpg');">
+    <div class="container">
+        <h1>Edit Product</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Product Name:</label>
+                <input type="text" id="name" name="name" value="{{ product.name }}" required class="input-field">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" value="{{ product.price }}" required class="input-field">
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="{{ product.quantity }}" required class="input-field">
+            </div>
+
+            <div class="form-group">
+                <label for="new_location">New Location:</label>
+                <select id="new_location" name="new_location" required class="input-field">
+                    {% set unique_locations = [] %}
+                    {% for location in locations %}
+                        {% if location.name not in unique_locations %}
+                            <option value="{{ location.id }}">{{ location.name }}</option>
+                            {% set _ = unique_locations.append(location.name) %}
+                        {% endif %}
+                    {% endfor %}
+                    <option value="new">New Location</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="custom-location-group" style="display: none;">
+                <label for="custom_location">Custom Location:</label>
+                <input type="text" id="custom_location" name="custom_location" placeholder="Enter New Location"
+                    class="input-field">
+            </div>
+            
+            <button type="submit" class="submit-btn">Edit Product</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript code to show the new location input field when the "New Location" option is selected
+        document.getElementById("new_location").addEventListener("change", function () {
+            var customLocationGroup = document.getElementById("custom-location-group");
+            if (this.value === "new") {
+                customLocationGroup.style.display = "block";
+                document.getElementById("custom_location").required = true;
+            } else {
+                customLocationGroup.style.display = "none";
+                document.getElementById("custom_location").required = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

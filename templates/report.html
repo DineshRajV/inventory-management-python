@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Product Balance in Each Location</title>
+</head>
+
+<body style="background-image: url('https://wallpapers.com/images/hd/plain-light-blue-background-3440-x-1440-6b4wkpb75fknez6m.jpg');">
+    <div class="container">
+        <h1 class="mt-5">Product Balance in Each Location</h1>
+
+        {% for location, products in product_balances.items() %}
+        <div class="location-heading mt-4">
+            <h2>{{ location }}</h2>
+        </div>
+
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
